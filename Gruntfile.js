@@ -4,16 +4,16 @@
 module.exports = function (grunt) {
 
     // Load the project's grunt tasks from a directory
-    require('grunt-config-dir')(grunt, {
-        configDir: require('path').resolve('tasks')
-    });
+    //require('grunt-config-dir')(grunt, {
+    //    configDir: require('path').resolve('tasks')
+    //});
 
     
     
     // Register group tasks
-    grunt.registerTask('build', ['eslint', 'eslint', 'copyto']);
+    grunt.registerTask('build', []); //'eslint', 'eslint', 'copyto'
 
-    grunt.registerTask('test', [ 'eslint', 'mochacli' ]);
+    grunt.registerTask('test', [ 'mochacli' ]); // 'eslint', 
 
     
 };
