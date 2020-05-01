@@ -16,6 +16,7 @@
     "construx-copier": "^1.0.0",
     "ejs": "^2.4.1",
     "express": "^4.12.2",
+    "kraken-js": "^2.3.0",
     "node-promise": "^0.5.12",
     "promise": "^7.1.1"
   },
