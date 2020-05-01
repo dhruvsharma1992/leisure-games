@@ -1,0 +1,33 @@
+{
+    "express": {
+        "view cache": false,
+        "view engine": "ejs",
+        "views": "path:./views"
+        
+    },
+    "specialization": {
+    },
+
+    "middleware": {        
+
+        "static": {
+            "module": {
+                "arguments": [ "path:./public" ]
+            }
+        },
+
+        "router": {
+            "module": {
+                "arguments": [{ "directory": "path:./controllers" }]
+            }
+        }
+        //,
+        //
+        //"helmet":{
+        //    "module":{
+        //        "name":"helmet",
+        //        "method":"helmet"
+        //    }
+        //}
+    }
+}
