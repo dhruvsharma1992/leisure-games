@@ -10,7 +10,6 @@ module.exports = {
             }
             else {
                 players[body.name] = {};
-                console.log(data);
                 next(null, data);
             }
         }
