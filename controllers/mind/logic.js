@@ -34,13 +34,13 @@ module.exports = {
             game.moves.push(turn);
             game.availableCards.shift();
             players[player].hand.shift();
-            game.lastTurn = player;
+            game.lastTurn = {'player':player, 'turn': turn};
         }
         else if (game.availableCards[0] == turn) {
             game.moves.push(turn);
             game.availableCards.shift();
             players[player].hand.shift();
-            game.lastTurn = player;
+            game.lastTurn = {'player':player, 'turn': turn};
         }
         else {
             game.result = 2; // fail
@@ -48,7 +48,7 @@ module.exports = {
             const index = game.availableCards.indexOf(turn);
             game.availableCards.splice(index, 1);
             players[player].hand.shift();
-            game.lastTurn = player;
+            game.lastTurn = {'player':player, 'turn': turn};
         }
         next(null, data);
     },

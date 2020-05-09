@@ -33,7 +33,6 @@ $("#newuser > form").submit(function(e) {
 });
 
 render = function(data) {
-    console.log("askdmalmdsa");
     $( "#moves > .moves" ).html("");
     data.game.moves.forEach(move => $( "#moves > .moves" ).append( "<div class=\"col-md-2 card\"><div>" + move + "</div></div>" ));
     if (data.game.result == 0) {
@@ -43,17 +42,21 @@ render = function(data) {
             $("#hand > div").text("");
         }
         else {
+            if(data.game.hasOwnProperty("lastTurn") && data.game.lastTurn.hasOwnProperty("player"))
+            {
+                $("#status > h2").text(data.game.lastTurn.player + " played " + data.game.lastTurn.turn);
+            }
             $("#cards").html("");
             hand.forEach(card => $("#cards").append( "<div class=\"col-md-2 card\"><div>" + card + "</div></div>" ));
             $("#playcard").text("play "+ hand[0]);
         }
     }
     else if (data.game.result == 1) {
-        $("#gameend").text("YOU WON");
+        $("#status > h2").text("YOU WON");
         $("#hand").hide();
     }
     else if (data.game.result == 2) {
-        $("#gameend").text("YOU LOOSE " + "Lowest Card available: " + data.game.availableCards[0]);
+        $("#status > h2").text("YOU LOOSE " + "Lowest Card available: " + data.game.availableCards[0]);
         $("#hand").hide();
     }
 };
