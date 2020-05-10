@@ -1,0 +1,42 @@
+<html lang="en">
+<%- include("./partials/title")%>
+<body>
+    <div id="main" class="container-fluid">
+        <div id = "newuser" class="container">
+            <form>
+                <div class="form-group">
+                  <label for="user">Choose a game nick:</label>
+                  <label id="message" class="error"></label>
+                  <input type="text" class="form-control" id="user" placeholder="User Name">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div id = "waiting" class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h1 class="display-4">Welcome To Mind!!</h1>
+              <p class="lead"> Waiting for admin to start the game</p>
+            </div>
+        </div>
+        <div id = "game" class="container-fluid">
+            <div id="status" class="container" ><h2 class="p-3 mb-2 bg-secondary-light text-dark font-italic"></h2></div>
+            <div id="moves" style="padding-bottom:10vh">
+                <div class="" style="text-align: center"><h2>Pile</h2></div>
+                <div class="moves row"></div>
+            </div>
+            <div id="hand" class="container">
+                <div style="text-align: center "><h2>Hand</h2></div>
+                <div id="cards" class="row"></div>
+                <div>
+                    <button id="playcard" type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                </div>
+            </div>
+            <div id="gameend"></div>
+        </div>
+    </div>   
+    <%- include("./partials/background")%>
+</body>
+
+<%- include("./partials/scripts")%>
+<script src="/public/js/mind.js" type="text/javascript"></script>
+</html>

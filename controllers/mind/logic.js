@@ -1,21 +1,35 @@
 data = require("./data");
+admin = require("./admin.data");
 game = data.game;
 players = data.players;
 
 module.exports = {
     createUser :  function(body, next) {
-        if (body.hasOwnProperty('name')) {
-            if (players.hasOwnProperty(body.name)){
-                next('Duplicate name', null);
-            }
-            else {
-                players[body.name] = {};
-                next(null, data);
-            }
+        if (game.hasGameStarted) {
+            next("Game Started. Wait for game to end.");
         }
         else {
-             next("Empty Body", null);
-        }        
+            if (body.hasOwnProperty('name')) {
+                if (players.hasOwnProperty(body.name)){
+                    next('Duplicate name', null);
+                }
+                else {
+                    players[body.name] = {};
+                    next(null, data);
+                }
+            }
+            else {
+                 next("Empty Body", null);
+            }
+        }
+    },
+    login : function(body, next) {
+        if (body.password === admin.password) {
+            next(null, data);
+        }
+        else {
+            next("Unable to login", null);
+        }
     },
     getUserStatus : function(name, next) {
         if (players.hasOwnProperty(name)) {

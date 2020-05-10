@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var logic = require("./logic");
+const admin = require('./admin');
 
 constructResponse = function(err, ret, res) {
     if (err) {
@@ -17,9 +18,7 @@ constructResponse = function(err, ret, res) {
     }
 };
 
-router.get('/admin', function (req, res) {        
-    res.render( 'mind/admin', {});        
-});
+router.use("/admin", admin);
 
 router.post('/createuser', function(req, res) {
     logic.createUser(req.body, function(err, ret) { constructResponse(err, ret, res); });
@@ -33,11 +32,11 @@ router.post('/playturn', function(req, res) {
     logic.playTurn(req.body.turn, req.body.player, function(err, ret) { constructResponse(err, ret, res); });
 });
 
-router.get('/start', function(req, res) {        
+router.post('/start', function(req, res) {        
     logic.startGame(function(err, ret) { constructResponse(err, ret, res); });
 });
 
-router.get('/end', function(req, res) {        
+router.post('/end', function(req, res) {        
     logic.endGame(function(err, ret) { constructResponse(err, ret, res); });
 });
 
