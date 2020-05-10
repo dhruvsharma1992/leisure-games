@@ -15,13 +15,14 @@ $("#endgame").click(function() {
     });
 });
 
-createPlayerCard = function(player) {
-    $( "#players" ).append( "<div class=\"col-md-2 playercard\"><div></div><div>"+ player + "</div></div>" );
-}
+createPlayerCards = function(players) {
+    players.forEach(player => $( "#players" ).append( "<div class=\"col-md-2 playercard\"><div>" + player + "</div></div>" ));
+};
+
 render = function(data) {
     console.log(data);
     $( "#players" ).html("");
-    Object.keys(data.players).forEach(player => createPlayerCard(player));
+    createPlayerCards(Object.keys(data.players));
     if (!data.game.hasGameStarted) {
         if (Object.keys(data.players).length > 1) {
             $("#startgame").show();
