@@ -47,7 +47,7 @@ render = function(data) {
                 $("#status > h2").text(data.game.lastTurn.player + " played " + data.game.lastTurn.turn);
             }
             $("#cards").html("");
-            hand.forEach(card => $("#cards").append( "<div class=\"col-md-2 card\"><div>" + card + "</div></div>" ));
+            hand.forEach(card => $("#cards").append( "<div class=\"col-md-3 card\"><div>" + card + "</div></div>" ));
             $("#playcard").text("play "+ hand[0]);
         }
     }
