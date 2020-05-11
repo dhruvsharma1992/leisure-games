@@ -1,6 +1,15 @@
 <html lang="en">
 <%- include("./partials/title")%>
 <body>
+    <div id="login" class="container">
+        <form>
+            <div class="form-group">
+              <label for="password">Admin Password:</label>
+              <input type="password" class="form-control" id="password" placeholder="">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
     <div id="main" class="container-fluid">
         <div id="status" class="container" ><h2 class="p-3 mb-2 bg-secondary-light text-dark font-italic"></h2></div>
         <div id="players" class="row" style="padding-bottom:5vh">

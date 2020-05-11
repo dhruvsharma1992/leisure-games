@@ -42,22 +42,29 @@ poll = function() {
         data = res.message;
         render(data);
         if (data.game.result == 0) {
-            //setTimeout(poll, 4000);
+            setTimeout(poll, 4000);
         }
     });
 };
 
+$("#login > form").submit(function(e) {
+    e.preventDefault();
+    pwd = $("#password").val();
+    $.post("/mind/admin/login", {'password': pwd})
+    .done(function() {
+        $("#login").hide();
+        $("#main").show();
+        $("#startgame").hide();
+        $("#endgame").hide();
+        poll();
+    })
+    .fail(function(error) {
+        console.log(error);
+        alert(error.responseJSON.message);
+    });
+});
+
 $(document).ready(function() {
     //var pwd = prompt("Enter admin password", "");
-    $("#startgame").hide();
-    $("#endgame").hide();
-    poll();
-    //$.post("/mind/admin/login", {'password': pwd})
-    //.done(function() {
-    //    poll();
-    //})
-    //.fail(function(error) {
-    //    console.log(error);
-    //    alert(error.responseJSON.message);
-    //}); 
+   $("#main").hide();
 });
