@@ -32,77 +32,39 @@ module.exports = {
            next("player does not exist", null); 
         }
     },
-    selectThief: function(playerName, thiefName, next) {
+    selectThief: function(playerName, thieves, next) {
         if (!players.hasOwnProperty(playerName)) {
             next("player does not exist", null);
         }
 
-        if (!players.hasOwnProperty(thiefName)) {
-            next("thief does not exist", null);
+        if(thieves.length != data.numOfThieves){
+            next("Incorrect number of Thieves are being added", null);
         }
 
         player = players[playerName];
         if(player.role != roles.availableRoles.Minister || player.role != roles.availableRoles.EvilMinister){
             next("player does not have permission to select a Thief", null);
-        }
-
-        thief = players[thiefName];
-        if(thief.role != roles.availableRoles.Thief || player.role != roles.availableRoles.Villager){
-            next("This player cannot be selected as a Thief", null);
         }
 
         if(!player.thieves){
             player.thieves = [];
         }
 
-        if(player.thieves.length == data.numOfThieves){
-            next("More players cannot be added as a Thief", null);
-        }
+        for(i=0; i<thieves.length; i++){
+            thiefName = thieves[i];
 
-        player.thieves.push(thiefName);
-        next(null, data);
-    },
-    unselectThief: function(playerName, thiefName, next) {
-        if (!players.hasOwnProperty(playerName)) {
-            next("player does not exist", null);
-        }
-
-        if (!players.hasOwnProperty(thiefName)) {
-            next("thief does not exist", null);
-        }
-
-        player = players[playerName];
-        if(player.role != roles.availableRoles.Minister || player.role != roles.availableRoles.EvilMinister){
-            next("player does not have permission to select a Thief", null);
-        }
-
-        if(!player.thieves){
-            next("nothing to unselect", null);
-        }
-
-        for(i=0; i < player.thieves.length; i++){
-            if(player.thieves[i] == thiefName){
-                player.thieves.splice(i, 1);
-                next(null, data);
+            if (!players.hasOwnProperty(thiefName)) {
+                next("thief does not exist", null);
             }
+    
+            thief = players[thiefName];
+            if(thief.role != roles.availableRoles.Thief || player.role != roles.availableRoles.Villager){
+                next("This player cannot be selected as a Thief", null);
+            }
+    
+            player.thieves.push(thiefName);
         }
-
-        next("This player was not added as a Thief", null);
-    },
-    doneThievesSelection: function(playerName, next) {
-        if (!players.hasOwnProperty(playerName)) {
-            next("player does not exist", null);
-        }
-
-        player = players[playerName];
-        if(player.role != roles.availableRoles.Minister || player.role != roles.availableRoles.EvilMinister){
-            next("player does not have permission to select a Thief", null);
-        }
-
-        if(!player.thieves || players.thieves.length != data.numOfThieves){
-            next("Select the required number of thieves", null);
-        }
-
+        
         next(null, data);
     },
     selectMinister: function(playerName, ministerName, next) {
@@ -125,22 +87,6 @@ module.exports = {
         }
 
         player.minister = ministerName;
-        next(null, data);
-    },
-    doneMinisterSelection: function(next) {
-        if (!players.hasOwnProperty(playerName)) {
-            next("player does not exist", null);
-        }
-
-        player = players[playerName];
-        if(player.role != roles.availableRoles.King){
-            next("player does not have permission to select a Minister", null);
-        }
-
-        if(!player.minister){
-            next("Select a Minister", null);
-        }
-
         next(null, data);
     },
     startGame: function(next) {
@@ -192,7 +138,7 @@ module.exports = {
         }
     },
     endGame: function(next) {
-        game = { hasGameStarted: false, result: 0 };
+        game = { hasGameStarted: false, numOfThieves: 0, result: 0 };
         players =  {};
         data = { game: game, players: players };
         next(null, data);
