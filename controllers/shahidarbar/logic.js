@@ -1,5 +1,6 @@
 data = require("./data");
 roles = require("./roles");
+points = require("./points");
 admin = require("./admin.data");
 game = data.game;
 players = data.players;
@@ -87,6 +88,71 @@ module.exports = {
         }
 
         player.minister = ministerName;
+        next(null, data);
+    },
+    finalResult: function(next) {
+        numOfPlayers = Object.keys(players).length;
+        playerNames = Object.keys(players);
+        
+        kingSelectionRow = 0;
+        thiefSelectedRow = 2;
+        personsNameSelectedByMinister = "";        
+        for(i=0; i < numOfPlayers; i++){
+            player = playerNames[i];
+            player = players[playerName];
+            
+            if(player.role == roles.availableRoles.King){
+                ministerName = player.minister;
+                minister = players[ministerName];
+                if(minister.role == roles.availableRoles.EvilMinister){
+                    kingSelectionRow = 1;
+                }
+            }
+            
+            if(player.role == roles.availableRoles.Minister){
+                personsNameSelectedByMinister = player.thieves[0];
+                personsSelectedByMinister = players[personsNameSelectedByMinister];
+                if(personsSelectedByMinister.role == roles.availableRoles.Thief){
+                    thiefSelectedRow = 3;
+                }
+            }
+        }
+
+        for(i=0; i < numOfPlayers; i++){
+            playerName = playerNames[i];
+            player = players[playerName];
+
+            if(player.role == roles.availableRoles.King){
+                player.points = points[kingSelectionRow][0];
+                player.points += points[thiefSelectedRow][0];
+            }
+            
+            if(player.role == roles.availableRoles.Minister){
+                player.points = points[kingSelectionRow][1];
+                player.points += points[thiefSelectedRow][1];
+            }
+            
+            if(player.role == roles.availableRoles.EvilMinister){
+                player.points = points[kingSelectionRow][2];
+                player.points += points[thiefSelectedRow][2];
+            }
+            
+            if(player.role == roles.availableRoles.Thief){
+                player.points = points[kingSelectionRow][3];
+                player.points += points[thiefSelectedRow][3];
+            }
+            
+            if(player.role == roles.availableRoles.Villager){
+                player.points = points[kingSelectionRow][4];
+                if(playerName == personsNameSelectedByMinister){
+                    player.points += points[4][4];
+                }
+                else{
+                    player.points += points[thiefSelectedRow][4];
+                }
+            }
+        }
+
         next(null, data);
     },
     startGame: function(next) {
